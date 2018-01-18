@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  passage: MyText
+  is_editing: false
+  is_complete: false
+  like_count: 1
+  view_count: 1
+
+two:
+  title: MyString
+  passage: MyText
+  is_editing: false
+  is_complete: false
+  like_count: 1
+  view_count: 1

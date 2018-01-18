@@ -1,0 +1,2 @@
+class StoryPart < ApplicationRecord
+end
