@@ -12,7 +12,6 @@ class AddStatsToUser < ActiveRecord::Migration[5.0]
     add_column :users, :referral_count, :integer, default: 0
     add_column :users, :friend_count, :integer, default: 0
     add_column :users, :story_count, :integer, default: 0
-    add_column :users, :word_count, :integer, default: 0
     add_column :users, :comment_count, :integer, default: 0
     add_column :users, :story_view_count, :integer, default: 0
     add_column :users, :profile_view_count, :integer, default: 0
