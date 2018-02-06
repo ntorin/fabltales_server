@@ -46,6 +46,6 @@ class RoomUsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def room_user_params
-      params.require(:room_user).permit(:room_id, :user_id, :is_master)
+      params.require(:room_user).permit(:room_id, :user_id, :is_master, :is_typing, :is_turn)
     end
 end
