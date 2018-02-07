@@ -5,8 +5,8 @@ class CreateStories < ActiveRecord::Migration[5.0]
       t.text :passage
       t.boolean :is_editing
       t.boolean :is_complete
-      t.integer :like_count
-      t.integer :view_count
+      t.integer :like_count, default: 0
+      t.integer :view_count, default: 0
 
       t.timestamps
     end

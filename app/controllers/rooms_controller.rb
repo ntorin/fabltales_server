@@ -63,9 +63,19 @@ class RoomsController < ApplicationController
 
   # POST /rooms/start_story
   # room_id
-  # story_id
+  # prompt
   def start_story
+    story = Story.create({title: 'Unnamed Story', prompt: params[:prompt] is_editing: true, is_complete: false })
+    room = Room.find(params[:room_id])
+    room.update(story_id: story.id)
 
+    users = RoomUser.where(room_id: params[:room_id])
+
+    users.each do |u|
+      StoryUser.create({story_id: story.id, user_id: u.id})
+    end
+
+    ActionCable.server.broadcast("room_#{params[:room_id]}", {room: room, story: story, users: users, action: 'room_start_story'})
   end
 
   # POST /rooms/rename_story

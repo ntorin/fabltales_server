@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180118175009) do
+ActiveRecord::Schema.define(version: 20180207011105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,8 +74,20 @@ ActiveRecord::Schema.define(version: 20180118175009) do
     t.integer  "room_id"
     t.integer  "user_id"
     t.boolean  "is_master"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "is_typing",  default: false
+    t.boolean  "is_turn",    default: false
+  end
+
+  create_table "room_votes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "room_id"
+    t.integer  "room_user_id"
+    t.string   "vote_type"
+    t.boolean  "has_agreed"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -88,6 +100,18 @@ ActiveRecord::Schema.define(version: 20180118175009) do
     t.integer  "user_count"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "turn"
+    t.integer  "user_limit"
+    t.string   "room_type"
+  end
+
+  create_table "shop_items", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "price"
+    t.string   "image"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "stories", force: :cascade do |t|
@@ -97,8 +121,10 @@ ActiveRecord::Schema.define(version: 20180118175009) do
     t.boolean  "is_complete"
     t.integer  "like_count"
     t.integer  "view_count"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "comment_count"
+    t.text     "prompt"
   end
 
   create_table "story_parts", force: :cascade do |t|
@@ -154,6 +180,7 @@ ActiveRecord::Schema.define(version: 20180118175009) do
     t.boolean  "accepted_tos",           default: false
     t.boolean  "verified",               default: false
     t.boolean  "is_banned",              default: false
+    t.integer  "word_count",             default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["identifier"], name: "index_users_on_identifier", unique: true, using: :btree
