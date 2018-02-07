@@ -39,41 +39,58 @@ class RoomsController < ApplicationController
   end
 
   # POST /rooms/fetch
+  # query
+  # sort_by
+  # page
+  # per_page
   def fetch
+    sort = 'created_at DESC'
 
-  end
+    case params[:sort_by]
+      when 'recent'
+        sort = 'created_at DESC'
+      else
 
-  # POST /rooms/join_room
-  def join_room
+    end
 
-  end
+    query = '%' + params[:query].downcase + '%'
 
-  # POST /rooms/leave_room
-  def leave_room
+    rooms = Room.where("LOWER(name) LIKE ?", query)
+                 .order(sort)
 
+    paginate json: rooms
   end
 
   # POST /rooms/start_story
+  # room_id
+  # story_id
   def start_story
 
   end
 
   # POST /rooms/rename_story
+  # room_id
+  # name
   def rename_story
 
   end
 
   # POST /rooms/complete_story
+  # room_id
   def complete_story
 
   end
 
   # POST /rooms/abandon_story
+  # room_id
   def abandon_story
 
   end
 
   # POST /rooms/add_part
+  # user_id
+  # room_id
+  # part
   def add_part
     room = Room.find(params[:room_id])
     story = Story.find(room.story_id)
