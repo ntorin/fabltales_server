@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :rooms
   mount_devise_token_auth_for 'User', at: 'auth'
 
+  get 'rooms/room_info/:room_id', to: 'rooms#room_info'
   post 'rooms/fetch', to: 'rooms#fetch'
   post 'rooms/start_story', to: 'rooms#start_story'
   post 'rooms/rename_story', to: 'rooms#rename_story'

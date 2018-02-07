@@ -65,7 +65,7 @@ class RoomsController < ApplicationController
   # room_id
   # prompt
   def start_story
-    story = Story.create({title: 'Unnamed Story', prompt: params[:prompt] is_editing: true, is_complete: false })
+    story = Story.create({title: 'Unnamed Story', prompt: params[:prompt], is_editing: true, is_complete: false })
     room = Room.find(params[:room_id])
     room.update(story_id: story.id)
 
@@ -76,6 +76,15 @@ class RoomsController < ApplicationController
     end
 
     ActionCable.server.broadcast("room_#{params[:room_id]}", {room: room, story: story, users: users, action: 'room_start_story'})
+  end
+
+  # GET /rooms/room_info/:room_id
+  def room_info
+    room = Room.find(params[:room_id])
+
+    users = RoomUser.where(room_id: params[:room_id])
+
+    render json: {room: room.to_json(:include => :story), users: users.to_json(:include => :user)}
   end
 
   # POST /rooms/rename_story

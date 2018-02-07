@@ -46,6 +46,6 @@ class StoryPartsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def story_part_params
-      params.require(:story_part).permit(:user_id, :story_id, :part)
+      params.require(:story_part).permit(:user_id, :story_id, :part, :prompt)
     end
 end
